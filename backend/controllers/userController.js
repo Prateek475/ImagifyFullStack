@@ -30,11 +30,11 @@ const userLogin = async (req,res) => {
     const {email,password} = req.body;
     const user = await userModel.findOne({email});
     if(!user) {
-      res.json({sucess: false,message:"Invalid Credentials..."});
+      return res.status(401).json({sucess: false,message:"Invalid Credentials..."});
     }
     const isMatch = await bcrypt.compare(password,user.password);
     if(!isMatch) {
-      res.json({sucess: false,message:"Invalid Credentials..."});
+      return res.status(401).json({sucess: false,message:"Invalid Credentials..."});
     } else {
       const token = jwt.sign({id: user._id},process.env.JWT_SECRET);
       res.json({sucess:true,token,user:{name : user.name}});
@@ -45,4 +45,15 @@ const userLogin = async (req,res) => {
   }
 }
 
-export {registerUser,userLogin};
+const userCredits = async (req,res) => {
+  try {
+    const {userId} = req;
+    const user = await userModel.findById(userId);
+    res.json({success: true,credits:user.creditBalance,user:{name:user.name}});
+  } catch (error)  {
+    console.log("Error happened: ",error);
+    res.json({sucess:false,message:error.message});
+  }
+}
+
+export {registerUser,userLogin,userCredits};
