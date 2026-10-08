@@ -33,6 +33,6 @@ export const generateImage = async (req,res) => {
     return res.json({success: true,message:"Image Generated",creditBalance:user.creditBalance-1,resultImage});
   } catch (error) {
     console.log("Error happened: ",error);
-    res.json({sucess:false,message:error.message});
+    res.json({success:false,message:error.message});
   }
 }

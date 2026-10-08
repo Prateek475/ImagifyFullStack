@@ -7,7 +7,7 @@ const userRouter = express.Router(); //now with userRouter we will create end po
 
 userRouter.post('/register',registerUser);
 //this is end point for api http:localhost:4000/api/user/register with post method coming req to server
-userRouter.get('/login',userLogin);
+userRouter.post('/login',userLogin);
 
 userRouter.get('/credits',userAuth,userCredits);
 //first middleware doing authentication checking whther user is logged in and authenticated or not when we confirms that we passed it to next controller where we use the userId obtained after authentication to get the credits of specific user who is authenticated...
